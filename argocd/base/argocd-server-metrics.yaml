@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: argocd-server-metrics
+  namespace: gitops-system
+  labels:
+    # Match Prometheus's serviceMonitorSelector.matchLabels
+    release: cluster-monitoring
+spec:
+  selector:
+    matchLabels:
+      # Labels for metrics Service
+      app.kubernetes.io/name: argocd-server-metrics
+  namespaceSelector:
+    matchNames:
+      - gitops-system
+  endpoints:
+    - port: metrics

@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  # namespace: gitops-system
+data:
+  # Enables application status badge feature
+  statusbadge.enabled: "true"
+
+  # Argo CD's externally facing base URL (optional). Required when configuring SSO
+  url: https://argocd.gitops.local
+
+  # A dex connector configuration (optional). See SSO configuration documentation:
+  # https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/sso
+  # https://dexidp.io/docs/connectors/
+  dex.config: |
+    connectors:
+      - type: gitlab
+        id: gitlab
+        name: GitLab
+        config:
+          baseURL: http://gitlab.gitops.local
+          clientID: $dex.gitlab.clientId
+          clientSecret: $dex.gitlab.clientSecret
+
+      - type: ldap
+        name: AD
+        id: ldap
+        config:
+          host: 10.224.14.4:389
+
+          insecureNoSSL: true
+          insecureSkipVerify: true
+
+          bindDN: $dex.ldap.bindDN
+          bindPW: $dex.ldap.bindPW
+
+          usernamePrompt: AD Username
+
+          userSearch:
+            baseDN: DC=GITOPS,DC=LOCAL
+            filter: "(objectClass=person)"
+            username: sAMAccountName
+            idAttr: distinguishedName
+            emailAttr: userPrincipalName
+            nameAttr: displayName
+
+          groupSearch:
+            baseDN: DC=GITOPS,DC=LOCAL
+            filter: "(objectClass=group)"
+            userMatchers:
+            - userAttr: distinguishedName
+              groupAttr: member
+            nameAttr: name
+
+  repositories: |
+    - url: acepi001cr01.azurecr.cn
+      type: helm
+      enableOci: true
+      name: acepi001cr01
+      usernameSecret:
+        name: repo-secret
+        key: acepi001cr01_username
+      passwordSecret:
+        name: repo-secret
+        key: acepi001cr01_password
+  repository.credentials: |
+    - url: http://560GHD11
+      usernameSecret:
+        name: repo-secret
+        key: gitlab_username
+      passwordSecret:
+        name: repo-secret
+        key: gitlab_password
