@@ -1,0 +1,41 @@
+site_name: GitOps Docs
+repo_name: "gitops-labs"
+repo_url: https://github.com/goldginkgo/gitops-labs
+site_url: https://xxxx/
+
+theme:
+  name: material
+  palette:
+    primary: "teal"
+  font:
+    text: "Work Sans"
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.instant
+    - navigation.sections
+  # logo: "assets/xxx.png"
+  # favicon: "assets/xxx.png"
+
+nav:
+  - Overview:
+      - "index.md"
+      - "understaning-gitops.md"
+      - "k8s-clusters-and-services.md"
+  - Deployment:
+      - "deploy/prerequisites.md"
+      - "deploy/setup.md"
+      - "deploy/setup-ci.md"
+      - "deploy/security.md"
+      - "deploy/upgrade.md"
+      - "deploy/monitoring.md"
+      - "deploy/backup-restore.md"
+  - User guide:
+      - "user-guide/basic-usage.md"
+      - "user-guide/migration.md"
+      - "user-guide/deployment-strategy.md"
+      - "user-guide/libraries.md"
+      - "user-guide/continuous-integration.md"
+  - FAQ:
+      - "faq/known-issues.md"
+  - Roadmap: "roadmap.md"
