@@ -20,8 +20,6 @@ We use [Argo CD](https://argoproj.github.io/argo-cd/) as the [GitOps](https://ww
 
 - GitOps
 - Kubernetes
-- Rancher
-- Azure Container Registry / Azure Key Vault
 - [Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/)
 - [Helm](https://helm.sh/)
 - [kustomize](https://kustomize.io/)
@@ -30,7 +28,7 @@ We use [Argo CD](https://argoproj.github.io/argo-cd/) as the [GitOps](https://ww
 - [Argo CD Notifications](https://argocd-notifications.readthedocs.io/en/stable/)
 - [Argo CD Image Updater](https://argocd-image-updater.readthedocs.io/en/stable/)
 - [Argo Rollouts](https://argoproj.github.io/argo-rollouts/)
-- [Azure Key Vault to Kubernetes](https://akv2k8s.io/)
+- [sealed-secrets](https://github.com/bitnami-labs/sealed-secrets)
 - [cert-manager](https://cert-manager.io/docs/)
 
 ### GitOps Managed Resources

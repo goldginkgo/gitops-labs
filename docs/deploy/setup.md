@@ -7,7 +7,7 @@ The cluster should be able to create following resources.
 - LoadBalancer service (used by ingress controller)
 - PV (used by trivy)
 
-### Install sealed-secrets
+## Install sealed-secrets
 
 Install sealed-secrets in the Kubernetes cluster.
 
@@ -28,47 +28,21 @@ sudo install -m 755 kubeseal /usr/local/bin/kubeseal
 kubeseal --fetch-cert --controller-name=sealed-secrets --controller-namespace=gitops-system > seal-pub-cert.pem  # cert expires in 30 days
 ```
 
-```
-k apply -f secrets
-```
-
-Create a secret
+Example of how to use sealed-secrets
 
 ```
 kubectl create secret generic my-secret --from-literal=key1=supersecret --from-literal=key2=topsecret --dry-run=client -o yaml | kubeseal --cert seal-pub-cert.pem -o yaml
 ```
 
+## Create secrets in the Cluster
+
+```
+k apply -f secrets
+```
+
+## Deploy ArgoCD and other tools
+
 ```
 kustomize build argocd | kubectl apply -f -
 k apply -f app-of-apps.yaml
 ```
-
-- Add the Cluster in Rancher and enable monitoring. Import the dashboard in Grafana as per [ArgoCD Metrics Documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/metrics/).
-
-- Install akv2k8s on all admin and workload clusters. Replace the values in the command with actual values. Be sure to move gitops-system namespace to `system` project in Rancher. This is because the ServiceMonitor resource (currently defined in gitops-system namespace) must be in the same project with Prometheus resource. Otherwise, the dashboard will not work.
-
-```console
-$ kubectl create ns gitops-system velero
-$ helm repo add spv-charts https://charts.spvapi.no
-$ helm repo update
-$ helm upgrade --install akv2k8s spv-charts/akv2k8s \
-  --namespace gitops-system \
-  --set global.keyVaultAuth=environment \
-  --set global.env.AZURE_TENANT_ID=<REPLACE_ME> \
-  --set global.env.AZURE_CLIENT_ID=<REPLACE_ME> \
-  --set global.env.AZURE_CLIENT_SECRET=<REPLACE_ME> \
-  --set global.env.AZURE_ENVIRONMENT=AzureChinaCloud \
-  --set env_injector.enabled=false --version 2.0.11
-```
-
-- Comment `- base/argocd-certificate.yaml` and `- base/argocd-ui-ingress.yaml` in argocd/kustomization file (cert-manager and ingress controller not installed yet). Install the GitOps engine by executing following commands. Wait until all apps are setup successfully. You may need to sync the apps manually in case of issues. Revert the comments once ArgoCD is installed.
-
-```console
-$ k ns gitops-system
-$ git clone git@http://gitlab.gitops.local/gitops-gitops/gitops-labs.git
-$ cd gitops-labs
-$ kustomize build argocd | kubectl apply -f -
-$ kubectl apply -f app-of-apps.yaml
-```
-
-- Bind the Azure internal Load Balancer (10.224.14.210) with the K8S worker node. (Kubernetes Load Balancer service is not used for compliance considerations. Instead we use NodePort service with 32000 for http port and 32001 for https port).

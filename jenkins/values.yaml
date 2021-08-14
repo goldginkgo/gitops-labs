@@ -304,26 +304,6 @@ jenkins:
     podName: default-agent
     command: "/usr/local/bin/jenkins-agent"
     podTemplates:
-      jnlp-old: |
-        - name: jnlp-old
-          label: jnlp-old
-          serviceAccount: jenkins
-          imagePullSecrets:
-            - name: "regsecret"
-          volumes:
-            - hostPathVolume:
-                hostPath: "/var/run/docker.sock"
-                mountPath: "/var/run/docker.sock"
-          containers:
-            - name: jnlp
-              image: aceda022cr01.azurecr.cn/library/jenkins-alpine:4.2.0
-              ttyEnabled: true
-              privileged: true
-              resourceRequestCpu: "400m"
-              resourceRequestMemory: "512Mi"
-              resourceLimitCpu: "1"
-              resourceLimitMemory: "2048Mi"
-
       maven38: |
         - name: maven38
           label: maven38
@@ -356,27 +336,15 @@ jenkins:
               args: "3600"
               ttyEnabled: true
               privileged: true
-              resourceRequestCpu: "400m"
-              resourceRequestMemory: "512Mi"
-              resourceLimitCpu: "1"
-              resourceLimitMemory: "2048Mi"
             - name: maven
               image: dockerhub.azk8s.cn/library/maven:3.8.1-openjdk-8-slim
               command: "/bin/sh -c"
               args: "cat"
               ttyEnabled: true
               privileged: true
-              resourceRequestCpu: "400m"
-              resourceRequestMemory: "512Mi"
-              resourceLimitCpu: "1"
-              resourceLimitMemory: "2048Mi"
             - name: trivy
               image: aquasec/trivy:0.18.3
               command: "/bin/sh -c"
               args: "cat"
               ttyEnabled: true
               privileged: true
-              resourceRequestCpu: "400m"
-              resourceRequestMemory: "512Mi"
-              resourceLimitCpu: "1"
-              resourceLimitMemory: "2048Mi"
