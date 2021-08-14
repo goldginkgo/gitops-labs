@@ -13,6 +13,8 @@ spec:
               value: "300"
             - name: ARGOCD_GIT_ATTEMPTS_COUNT
               value: "5"
+            - name: NO_PROXY
+              value: argocd-repo-server,argocd-application-controller,argocd-metrics,argocd-server,argocd-server-metrics,argocd-dex-server,argocd-redis,10.0.0.0/8
             - name: HTTP_PROXY
               value: http://10.60.99.50:3128
             - name: HTTPS_PROXY
