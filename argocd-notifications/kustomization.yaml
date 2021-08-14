@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: gitops-system
 
 resources:
-  - base/argocd-notifications-secret-sync.yaml
+  - base/argocd-notifications-secret.yaml
   - base/install.yaml # https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/v1.1.1/manifests/install.yaml
 
 patchesStrategicMerge:
