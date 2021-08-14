@@ -7,9 +7,6 @@ resources:
   # - base/argocd-metrics.yaml
   # - base/argocd-repo-server-metrics.yaml
   # - base/argocd-server-metrics.yaml
-  # - base/argocd-certificate.yaml
-  # - base/argocd-ui-ingress.yaml
-
 
 patchesStrategicMerge:
   - overlays/argocd-cm.yaml
