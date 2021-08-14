@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   # - base/repo-secret-sync.yaml
-  # - base/argocd-secret-sync.yaml
   - base/install.yaml # https://raw.githubusercontent.com/argoproj/argo-cd/v2.0.5/manifests/install.yaml
   - base/project-admin.yaml
   # - base/argocd-metrics.yaml

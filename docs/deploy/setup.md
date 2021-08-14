@@ -23,10 +23,18 @@ sudo install -m 755 kubeseal /usr/local/bin/kubeseal
 kubeseal --fetch-cert --controller-name=sealed-secrets --controller-namespace=gitops-system > seal-pub-cert.pem  # cert expires in 30 days
 ```
 
+```
+k apply -f secrets
+```
+
 Create a secret
 
 ```
 kubectl create secret generic my-secret --from-literal=key1=supersecret --from-literal=key2=topsecret --dry-run=client -o yaml | kubeseal --cert seal-pub-cert.pem -o yaml
+```
+
+```
+kustomize build argocd | kubectl apply -f -
 ```
 
 - Add the Cluster in Rancher and enable monitoring. Import the dashboard in Grafana as per [ArgoCD Metrics Documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/metrics/).
