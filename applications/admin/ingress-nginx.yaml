@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: gitops-system
+  # Add a this finalizer ONLY if you want these to cascade delete.
+  # finalizers:
+  #   - resources-finalizer.argocd.argoproj.io
+spec:
+  project: admin
+
+  source:
+    repoURL: https://kubernetes.github.io/ingress-nginx
+    chart: ingress-nginx
+    targetRevision: 3.35.0
+    helm:
+      values: |
+        controller:
+          image:
+            repository: k8sgcr.azk8s.cn/ingress-nginx/controller
+          service:
+            type: LoadBalancer
+            # loadBalancerIP: 10.240.0.42
+            # annotations:
+            #   service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+          # autoscaling:
+          #   enabled: true
+          #   minReplicas: 2
+          #   maxReplicas: 3
+  ignoreDifferences:
+    - group: autoscaling
+      kind: HorizontalPodAutoscaler
+      jsonPointers:
+        - /spec/metrics
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitops-system
+
+  syncPolicy:
+    automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+      prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+      selfHeal: true # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+      # allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+    syncOptions: # Sync options which modifies sync behavior
+      - Validate=false # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+      - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+      - ApplyOutOfSyncOnly=true
+      - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
+      - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+    retry:
+      limit: 5 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
+
+  # # Ignore differences at the specified json pointers
+  # ignoreDifferences:
+  # - group: apps
+  #   kind: Deployment
+  #   jsonPointers:
+  #   - /spec/replicas
