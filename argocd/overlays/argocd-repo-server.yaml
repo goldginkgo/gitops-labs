@@ -13,3 +13,8 @@ spec:
               value: "300"
             - name: ARGOCD_GIT_ATTEMPTS_COUNT
               value: "5"
+          env:
+            - name: HTTP_PROXY
+              value: http://10.60.99.50:3128
+            - name: HTTPS_PROXY
+              value: http://10.60.99.50:3128
