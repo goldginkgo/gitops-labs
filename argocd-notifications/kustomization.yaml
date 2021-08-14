@@ -4,9 +4,9 @@ kind: Kustomization
 namespace: gitops-system
 
 resources:
-  - base/argocd-notifications-secret.yaml
   - base/install.yaml # https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/v1.1.1/manifests/install.yaml
 
 patchesStrategicMerge:
+  - overlays/argocd-notifications-secret.yaml
   - overlays/argocd-notifications-cm.yaml
   - overlays/catelog.yaml # https://raw.githubusercontent.com/argoproj-labs/argocd-notifications/v1.1.1/catalog/install.yaml
