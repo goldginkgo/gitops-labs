@@ -2,6 +2,8 @@
 
 ## Provision a Kubernetes cluster
 
+The cluster should be able to create LoadBalancer service which is used by ingress controller.
+
 ### Install sealed-secrets
 
 Install sealed-secrets in the Kubernetes cluster.

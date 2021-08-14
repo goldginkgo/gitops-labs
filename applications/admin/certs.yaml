@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: certificates
+  name: certs
   namespace: gitops-system
   annotations:
     argocd.argoproj.io/manifest-generate-paths: /certs
