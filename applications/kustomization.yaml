@@ -3,21 +3,21 @@ kind: Kustomization
 
 resources:
   # Admin Cluster
-  - admin/cert-manager.yaml
-  - admin/admin-certificates.yaml
-  - admin/ingress-nginx.yaml
+  # - admin/cert-manager.yaml
+  # - admin/admin-certificates.yaml
+  # - admin/ingress-nginx.yaml
   - admin/argocd.yaml
-  - admin/argocd-notifications.yaml
-  - admin/applicationset.yaml
-  - admin/argocd-image-updater.yaml
-  - admin/admin-secrets.yaml
-  - admin/admin-pvc.yaml
-  - admin/gitops-docs.yaml
-  - admin/elastic-operator.yaml
-  - admin/trivy.yaml
-  - admin/jenkins.yaml
-  - admin/sonarqube.yaml
-  - admin/nexus.yaml
-  - admin/elastic-stack.yaml
-  - admin/kube-prometheus-stack.yaml
-  - admin/velero.yaml
+  # - admin/argocd-notifications.yaml
+  # - admin/applicationset.yaml
+  # - admin/argocd-image-updater.yaml
+  # - admin/admin-secrets.yaml
+  # - admin/admin-pvc.yaml
+  # - admin/gitops-docs.yaml
+  # - admin/elastic-operator.yaml
+  # - admin/trivy.yaml
+  # - admin/jenkins.yaml
+  # - admin/sonarqube.yaml
+  # - admin/nexus.yaml
+  # - admin/elastic-stack.yaml
+  # - admin/kube-prometheus-stack.yaml
+  # - admin/velero.yaml
