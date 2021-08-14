@@ -1,5 +1,14 @@
 # Setup GitOps Core Components
 
+```
+cd gitops-labs
+k apply -f namespaces
+helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets
+helm dependency build sealed-secrets
+helm install sealed-secrets sealed-secrets
+
+```
+
 - Create a Azure AKS cluster.
 
 - Add the Cluster in Rancher and enable monitoring. Import the dashboard in Grafana as per [ArgoCD Metrics Documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/metrics/).
