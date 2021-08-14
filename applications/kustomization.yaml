@@ -9,7 +9,7 @@ resources:
   - admin/argocd.yaml
   - admin/argocd-notifications.yaml
   - admin/applicationset.yaml
-  # - admin/argocd-image-updater.yaml
+  - admin/argocd-image-updater.yaml
   # - admin/admin-secrets.yaml
   # - admin/admin-pvc.yaml
   # - admin/gitops-docs.yaml
