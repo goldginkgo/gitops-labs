@@ -1,0 +1,7 @@
+cert-manager:
+  global:
+    leaderElection:
+      namespace: "gitops-system"
+    installCRDs: true
+  prometheus:
+    enabled: false

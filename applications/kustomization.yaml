@@ -3,10 +3,10 @@ kind: Kustomization
 
 resources:
   # Admin Cluster
-  # - admin/cert-manager.yaml
   # - admin/admin-certificates.yaml
   # - admin/ingress-nginx.yaml
   - admin/argocd.yaml
+  - admin/cert-manager.yaml
   - admin/argocd-notifications.yaml
   - admin/applicationset.yaml
   - admin/argocd-image-updater.yaml
