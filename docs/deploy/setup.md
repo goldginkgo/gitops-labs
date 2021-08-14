@@ -1,15 +1,33 @@
 # Setup GitOps Core Components
 
+## Provision a Kubernetes cluster
+
+### Install sealed-secrets
+
+Install sealed-secrets in the Kubernetes cluster.
+
 ```
+git clone https://github.com/goldginkgo/gitops-labs.git
 cd gitops-labs
 k apply -f namespaces
 helm repo add sealed-secrets https://bitnami-labs.github.io/sealed-secrets
 helm dependency build sealed-secrets
 helm install sealed-secrets sealed-secrets
-
 ```
 
-- Create a Azure AKS cluster.
+Intall kubeseal client in you local Ubuntu desktop.
+
+```
+wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.16.0/kubeseal-linux-amd64 -O kubeseal
+sudo install -m 755 kubeseal /usr/local/bin/kubeseal
+kubeseal --fetch-cert --controller-name=sealed-secrets --controller-namespace=gitops-system > seal-pub-cert.pem  # cert expires in 30 days
+```
+
+Create a secret
+
+```
+kubectl create secret generic my-secret --from-literal=key1=supersecret --from-literal=key2=topsecret --dry-run=client -o yaml | kubeseal --cert seal-pub-cert.pem -o yaml
+```
 
 - Add the Cluster in Rancher and enable monitoring. Import the dashboard in Grafana as per [ArgoCD Metrics Documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/metrics/).
 
