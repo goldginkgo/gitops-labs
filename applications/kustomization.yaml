@@ -8,7 +8,7 @@ resources:
   # - admin/ingress-nginx.yaml
   - admin/argocd.yaml
   - admin/argocd-notifications.yaml
-  # - admin/applicationset.yaml
+  - admin/applicationset.yaml
   # - admin/argocd-image-updater.yaml
   # - admin/admin-secrets.yaml
   # - admin/admin-pvc.yaml
