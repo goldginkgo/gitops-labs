@@ -12,7 +12,7 @@ spec:
   project: admin
 
   source:
-    repoURL: http://560GHD11/aldi-gitops/gitops-k8s
+    repoURL: https://github.com/goldginkgo/gitops-labs
     targetRevision: HEAD
     path: argocd
 

@@ -35,6 +35,7 @@ kubectl create secret generic my-secret --from-literal=key1=supersecret --from-l
 
 ```
 kustomize build argocd | kubectl apply -f -
+k apply -f app-of-apps.yaml
 ```
 
 - Add the Cluster in Rancher and enable monitoring. Import the dashboard in Grafana as per [ArgoCD Metrics Documentation](https://argo-cd.readthedocs.io/en/stable/operator-manual/metrics/).
