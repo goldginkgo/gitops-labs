@@ -2,7 +2,10 @@
 
 ## Provision a Kubernetes cluster
 
-The cluster should be able to create LoadBalancer service which is used by ingress controller.
+The cluster should be able to create following resources.
+
+- LoadBalancer service (used by ingress controller)
+- PV (used by trivy)
 
 ### Install sealed-secrets
 

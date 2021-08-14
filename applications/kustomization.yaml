@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   # Admin Cluster
   - admin/argocd.yaml
+  - admin/secrets.yaml
   - admin/argocd-notifications.yaml
   - admin/applicationset.yaml
   - admin/argocd-image-updater.yaml
@@ -11,7 +12,6 @@ resources:
   - admin/certs.yaml
   - admin/ingress-nginx.yaml
   - admin/ingress.yaml
-  # - admin/admin-secrets.yaml
   # - admin/admin-pvc.yaml
   # - admin/elastic-operator.yaml
   - admin/trivy.yaml
