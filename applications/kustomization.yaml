@@ -13,9 +13,8 @@ resources:
   - admin/ingress.yaml
   # - admin/admin-secrets.yaml
   # - admin/admin-pvc.yaml
-  # - admin/gitops-docs.yaml
   # - admin/elastic-operator.yaml
-  # - admin/trivy.yaml
+  - admin/trivy.yaml
   # - admin/jenkins.yaml
   # - admin/sonarqube.yaml
   # - admin/nexus.yaml

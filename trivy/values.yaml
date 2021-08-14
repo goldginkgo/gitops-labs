@@ -1,0 +1,5 @@
+trivy:
+  image:
+    registry: "dockerhub.azk8s.cn"
+  # trivy:
+    # gitHubToken: ""
