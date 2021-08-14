@@ -12,10 +12,10 @@ resources:
   - admin/certs.yaml
   - admin/ingress-nginx.yaml
   - admin/ingress.yaml
-  # - admin/admin-pvc.yaml
-  # - admin/elastic-operator.yaml
   - admin/trivy.yaml
   # - admin/jenkins.yaml
+  # - admin/admin-pvc.yaml
+  # - admin/elastic-operator.yaml
   # - admin/sonarqube.yaml
   # - admin/nexus.yaml
   # - admin/elastic-stack.yaml
