@@ -6,7 +6,7 @@ jenkins:
     size: "10Gi"
   controller:
     image: "goldginkgo/jenkins"
-    tag: "0.1.0"
+    tag: "0.1"
     # imagePullSecretName: regcred
     installPlugins: false
     jenkinsAdminEmail: admin@test.cn
@@ -18,3 +18,17 @@ jenkins:
         - secretName: jenkins-ingress-tls
           hosts:
             - jenkins.gitops.local
+    additionalExistingSecrets:
+      - name: jenkins-admin-credentials
+        keyName: jenkins-pass
+    # https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
+    # https://jenkins2.infra.aldicn.local/configuration-as-code/reference
+    JCasC:
+      securityRealm: |-
+        local:
+          allowsSignup: false
+          enableCaptcha: false
+          users:
+          - id: "admin"
+            name: "Jenkins Admin"
+            password: "${jenkins-admin-credentials-jenkins-pass}"
