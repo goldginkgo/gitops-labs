@@ -19,7 +19,7 @@ jenkins:
           hosts:
             - jenkins.gitops.local
     additionalExistingSecrets:
-      - name: jenkins-admin-credentials
+      - name: jenkins-admin-secret
         keyName: jenkins-pass
     # https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
     # https://jenkins2.infra.aldicn.local/configuration-as-code/reference
@@ -31,4 +31,4 @@ jenkins:
           users:
           - id: "admin"
             name: "Jenkins Admin"
-            password: "${jenkins-admin-credentials-jenkins-pass}"
+            password: "${jenkins-admin-secret-jenkins-pass}"
