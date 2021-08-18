@@ -1,0 +1,10 @@
+nexus-repository-manager:
+  ingress:
+    enabled: true
+    hostRepo: nexus.gitops.local
+    tls:
+      - secretName: nexus-ingress-tls
+        hosts:
+          - nexus.gitops.local
+  persistence:
+    storageSize: 10Gi

@@ -13,11 +13,11 @@ resources:
   - admin/ingress-nginx.yaml
   - admin/ingress.yaml
   - admin/trivy.yaml
+  - admin/nexus.yaml
   - admin/pvc.yaml
   - admin/jenkins.yaml
   # - admin/elastic-operator.yaml
   # - admin/sonarqube.yaml
-  # - admin/nexus.yaml
   # - admin/elastic-stack.yaml
   # - admin/kube-prometheus-stack.yaml
   # - admin/velero.yaml
