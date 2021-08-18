@@ -183,7 +183,7 @@ jenkins:
                     - "Credentials/View"
 
   agent:
-    namespace: jenkins
+    namespace: gitops-system
     image: "dockerhub.azk8s.cn/jenkins/inbound-agent"
     tag: "4.6-1"
     podName: default-agent
