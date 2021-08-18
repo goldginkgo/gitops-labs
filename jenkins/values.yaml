@@ -89,7 +89,7 @@ jenkins:
               buildWrapperEnabled: true
               installations:
                 - name: "SonarQube"
-                  serverUrl: "http://sonarqube-sonarqube.gitops.svc.cluster.local:9000"
+                  serverUrl: "http://sonarqube-sonarqube.gitops-system.svc.cluster.local:9000"
                   credentialsId: sonarqube-token
         nexus-repository-manager: |
           unclassified:
@@ -99,7 +99,7 @@ jenkins:
                     credentialsId: nexus_username_pass
                     displayName: ALDI Nexus
                     id: aldi-nexus
-                    serverUrl: http://nexus-nexus-repository-manager.gitops.svc.cluster.local:8081
+                    serverUrl: http://nexus-nexus-repository-manager.gitops-system.svc.cluster.local:8081
         mailer: |
           unclassified:
             mailer:
