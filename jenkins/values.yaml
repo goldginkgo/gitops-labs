@@ -25,6 +25,8 @@ jenkins:
         keyName: nexus-user
       - name: nexus-credentials
         keyName: nexus-password
+      - name: sonarqube-credentials
+        keyName: sonarqube-token
     # https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
     # https://jenkins2.infra.aldicn.local/configuration-as-code/reference
     JCasC:
@@ -66,6 +68,11 @@ jenkins:
                     password: ${nexus-credentials-nexus-password}
                     scope: GLOBAL
                     username: ${nexus-credentials-nexus-user}
+                - string:
+                    scope: GLOBAL
+                    id: "sonarqube-token"
+                    secret: "${sonarqube-credentials-sonarqube-token}"
+                    description: "SonarQube token"
         maven: |
           tool:
             maven:
@@ -76,6 +83,14 @@ jenkins:
                         installers:
                           - maven:
                               id: "3.6.3"
+        sonarqube: |
+          unclassified:
+            sonarglobalconfiguration:
+              buildWrapperEnabled: true
+              installations:
+                - name: "SonarQube"
+                  serverUrl: "http://sonarqube-sonarqube.gitops.svc.cluster.local:9000"
+                  credentialsId: sonarqube-token
         nexus-repository-manager: |
           unclassified:
             globalNexusConfiguration:
