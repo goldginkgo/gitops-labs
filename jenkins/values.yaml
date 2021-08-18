@@ -110,9 +110,7 @@ jenkins:
               roleBased:
                 roles:
                   global:
-                  - assignments:
-                    - "g_Jenkins_Admin"
-                    name: "admin"
+                  - name: "admin"
                     pattern: ".*"
                     permissions:
                     - "Job/Move"
@@ -150,9 +148,7 @@ jenkins:
                     - "Metrics/View"
                     - "Job/Workspace"
                     - "View/Read"
-                  - assignments:
-                    - "g_Jenkins_Operator"
-                    name: "operator"
+                  - name: "operator"
                     pattern: ".*"
                     permissions:
                     - "Lockable Resources/View"
@@ -169,9 +165,7 @@ jenkins:
                     - "Job/Workspace"
                     - "Metrics/View"
                     - "View/Read"
-                  - assignments:
-                    - "g_Jenkins_User"
-                    name: "user"
+                  - name: "user"
                     pattern: ".*"
                     permissions:
                     - "Overall/Read"
