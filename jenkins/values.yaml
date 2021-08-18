@@ -21,6 +21,10 @@ jenkins:
     additionalExistingSecrets:
       - name: jenkins-admin-secret
         keyName: jenkins-pass
+      - name: nexus-credentials
+        keyName: nexus-user
+      - name: nexus-credentials
+        keyName: nexus-password
     # https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
     # https://jenkins2.infra.aldicn.local/configuration-as-code/reference
     JCasC:
@@ -51,6 +55,17 @@ jenkins:
         welcome-message: |
           jenkins:
             systemMessage: Welcome to Jenkins server.
+        jenkins-credentials: |
+          credentials:
+            system:
+              domainCredentials:
+              - credentials:
+                - usernamePassword:
+                    description: "Nexus access username password"
+                    id: "nexus_username_pass"
+                    password: ${nexus-credentials-nexus-password}
+                    scope: GLOBAL
+                    username: ${nexus-credentials-nexus-user}
         maven: |
           tool:
             maven:
@@ -61,6 +76,15 @@ jenkins:
                         installers:
                           - maven:
                               id: "3.6.3"
+        nexus-repository-manager: |
+          unclassified:
+            globalNexusConfiguration:
+              nxrmConfigs:
+                - nxrm3Configuration:
+                    credentialsId: nexus_username_pass
+                    displayName: ALDI Nexus
+                    id: aldi-nexus
+                    serverUrl: http://nexus-nexus-repository-manager.gitops.svc.cluster.local:8081
         mailer: |
           unclassified:
             mailer:
