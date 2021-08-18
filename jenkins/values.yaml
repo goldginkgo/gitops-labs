@@ -214,6 +214,28 @@ jenkins:
         #             - "Metrics/View"
         #             - "View/Read"
         #             - "Credentials/View"
+        jobs: |
+          jobs:
+            - script: >
+                job('load_gitops_jobs') {
+                  concurrentBuild(false)
+                  logRotator {
+                    numToKeep(10)
+                  }
+                  scm {
+                    git {
+                      remote {
+                        url('https://github.com/goldginkgo/jenkins-jobs.git')
+                      }
+                      branch('*/master')
+                    }
+                  }
+                  steps {
+                    jobDsl{
+                      targets("folders.groovy\ngitops/*.groovy")
+                    }
+                  }
+                }
 
   agent:
     namespace: gitops-system
@@ -231,11 +253,6 @@ jenkins:
                 key: "DOCKER_CONFIG"
                 value: "/kaniko/.docker"
           volumes:
-            # - configMapVolume:
-            #     configMapName: "trivy-html-template"
-            #     mountPath: "/trivy"
-            #     optional: false
-
             # - secretVolume:
             #     mountPath: "/kaniko/.docker"
             #     optional: false
