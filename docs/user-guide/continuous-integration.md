@@ -3,20 +3,19 @@
 ## Jenkins Jobs
 
 Use [Job DSL](https://plugins.jenkins.io/job-dsl/) to define Jenkins jobs in a programmatic way.
-Refer to [DSL API reference](https://jenkins2.infra.gitops.local//plugin/job-dsl/api-viewer/index.html).
+Refer to [DSL API reference](https://jenkins.gitops.local/plugin/job-dsl/api-viewer/index.html).
 Jobs are defined in `gitops-gitops/jenkins-jobs`.
 
 ### Example
 
 ```groovy
-pipelineJob('gitops/gitops-docs') {
+pipelineJob('gitops/docker-jenkins') {
   definition {
     cpsScm {
       scm {
         git {
           remote {
-            url('http://560GHD11/gitops-gitops/gitops-docs.git')
-            credentials('gitlab_username_pass')
+            url('https://github.com/goldginkgo/jenkins-docker.git')
           }
           branch('*/master')
         }
@@ -35,7 +34,6 @@ pipelineJob('gitops/gitops-docs') {
     }
   }
 }
-
 ```
 
 ## Jenkinsfile
@@ -63,9 +61,9 @@ pipeline {
         timeout(time:10, unit:'MINUTES') //设置流水线超时时间
     }
 
-    environment {
-        ACR_REGISTRY_CREDS = credentials('acepi001cr01_username_pass')
-    }
+    // environment {
+    //     ACR_REGISTRY_CREDS = credentials('acepi001cr01_username_pass')
+    // }
 
     stages {
         stage('VulnerabilityScan') {
@@ -73,9 +71,9 @@ pipeline {
                 container("trivy"){
                     script{
                         sh '''
-                            export TRIVY_USERNAME=${ACR_REGISTRY_CREDS_USR}
-                            export TRIVY_PASSWORD=${ACR_REGISTRY_CREDS_PSW}
-                            trivy client --remote http://trivy.gitops-system:4954 -f json -o trivy-report.json acepi001cr01.azurecr.cn/library/centos7.8-tomcat8.5.59:openjdk-1.8_252
+                            # export TRIVY_USERNAME=${ACR_REGISTRY_CREDS_USR}
+                            # export TRIVY_PASSWORD=${ACR_REGISTRY_CREDS_PSW}
+                            trivy client --remote http://trivy.gitops-system:4954 -f json -o trivy-report.json goldginkgo/jenkins:0.1
                         '''
                     }
                 }

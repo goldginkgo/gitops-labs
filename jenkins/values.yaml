@@ -27,6 +27,10 @@ jenkins:
         keyName: nexus-password
       - name: sonarqube-credentials
         keyName: sonarqube-token
+      - name: github-user-credentials
+        keyName: github-user
+      - name: github-user-credentials
+        keyName: github-password
     # https://github.com/jenkinsci/configuration-as-code-plugin/tree/master/demos
     # https://jenkins2.infra.aldicn.local/configuration-as-code/reference
     JCasC:
@@ -73,6 +77,12 @@ jenkins:
                     id: "sonarqube-token"
                     secret: "${sonarqube-credentials-sonarqube-token}"
                     description: "SonarQube token"
+                - usernamePassword:
+                    description: "GitHub access username password"
+                    id: "github_username_pass"
+                    password: ${github-user-credentials-github-password}
+                    scope: GLOBAL
+                    username: ${github-user-credentials-github-user}
         maven: |
           tool:
             maven:
@@ -118,7 +128,7 @@ jenkins:
                     modernSCM:
                       scm:
                         git:
-                          id: "jenkins-gitlab"
+                          id: "jenkins-github"
                           remote: "https://github.com/goldginkgo/jenkins-library.git"
                           traits:
                             - "gitBranchDiscovery"
@@ -241,7 +251,7 @@ jenkins:
     namespace: gitops-system
     image: "dockerhub.azk8s.cn/jenkins/inbound-agent"
     tag: "4.6-1"
-    podName: default-agent
+    podName: default-jenkins-agent
     command: "/usr/local/bin/jenkins-agent"
     podTemplates:
       maven38: |
