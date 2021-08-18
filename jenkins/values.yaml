@@ -83,3 +83,154 @@ jenkins:
                           remote: "https://github.com/goldginkgo/jenkins-library.git"
                           traits:
                             - "gitBranchDiscovery"
+        email-ext: |
+          unclassified:
+            email-ext:
+              defaultContentType: "text/html"
+              defaultSuffix: "@gitops.cn"
+              mailAccount:
+                smtpHost: "smtp.gitops.local"
+        allure: |
+          tool:
+            allure:
+              installations:
+              - name: "Allure"
+                properties:
+                - installSource:
+                    installers:
+                    - allureCommandlineInstaller:
+                        id: "2.13.9"
+        script-security: |
+          security:
+            globalJobDslSecurityConfiguration:
+              useScriptSecurity: false  # Disalbe script security as authorize-project-plugin doesn't support JCasC https://github.com/jenkinsci/authorize-project-plugin/pull/44
+        role-strategy: |
+          jenkins:
+            authorizationStrategy:
+              roleBased:
+                roles:
+                  global:
+                  - assignments:
+                    - "g_Jenkins_Admin"
+                    name: "admin"
+                    pattern: ".*"
+                    permissions:
+                    - "Job/Move"
+                    - "Job/Build"
+                    - "Lockable Resources/View"
+                    - "Credentials/Delete"
+                    - "Credentials/ManageDomains"
+                    - "Lockable Resources/Unlock"
+                    - "View/Create"
+                    - "Agent/Configure"
+                    - "Job/Read"
+                    - "Credentials/Update"
+                    - "Agent/Create"
+                    - "Job/Delete"
+                    - "Agent/Build"
+                    - "View/Configure"
+                    - "Lockable Resources/Reserve"
+                    - "Agent/Provision"
+                    - "SCM/Tag"
+                    - "Job/Create"
+                    - "Job/Discover"
+                    - "Credentials/View"
+                    - "Agent/Connect"
+                    - "Agent/Delete"
+                    - "Run/Replay"
+                    - "Agent/Disconnect"
+                    - "Run/Delete"
+                    - "Job/Cancel"
+                    - "Overall/Read"
+                    - "Run/Update"
+                    - "Credentials/Create"
+                    - "Overall/Administer"
+                    - "View/Delete"
+                    - "Job/Configure"
+                    - "Metrics/View"
+                    - "Job/Workspace"
+                    - "View/Read"
+                  - assignments:
+                    - "g_Jenkins_Operator"
+                    name: "operator"
+                    pattern: ".*"
+                    permissions:
+                    - "Lockable Resources/View"
+                    - "Job/Build"
+                    - "SCM/Tag"
+                    - "Job/Discover"
+                    - "Job/Read"
+                    - "Credentials/View"
+                    - "Run/Replay"
+                    - "Job/Cancel"
+                    - "Overall/Read"
+                    - "Run/Update"
+                    - "Job/Configure"
+                    - "Job/Workspace"
+                    - "Metrics/View"
+                    - "View/Read"
+                  - assignments:
+                    - "g_Jenkins_User"
+                    name: "user"
+                    pattern: ".*"
+                    permissions:
+                    - "Overall/Read"
+                    - "Lockable Resources/View"
+                    - "SCM/Tag"
+                    - "Job/Read"
+                    - "Metrics/View"
+                    - "View/Read"
+                    - "Credentials/View"
+
+  agent:
+    namespace: jenkins
+    image: "dockerhub.azk8s.cn/jenkins/inbound-agent"
+    tag: "4.6-1"
+    podName: default-agent
+    command: "/usr/local/bin/jenkins-agent"
+    podTemplates:
+      maven38: |
+        - name: maven38
+          label: maven38
+          serviceAccount: jenkins
+          envVars:
+            - envVar:
+                key: "DOCKER_CONFIG"
+                value: "/kaniko/.docker"
+          volumes:
+            # - configMapVolume:
+            #     configMapName: "trivy-html-template"
+            #     mountPath: "/trivy"
+            #     optional: false
+
+            # - secretVolume:
+            #     mountPath: "/kaniko/.docker"
+            #     optional: false
+            #     secretName: "kaniko-docker"
+            - persistentVolumeClaim:
+                mountPath: "/root/.m2/repository"
+                readOnly: false
+                claimName: "maven-cache-pvc"
+            - persistentVolumeClaim:
+                mountPath: "/kanikocache"
+                readOnly: false
+                claimName: "kaniko-cache-pvc"
+          containers:
+            - name: kaniko
+              image: gcr.azk8s.cn/kaniko-project/executor:v1.6.0-debug
+              command: "sleep"
+              args: "3600"
+              ttyEnabled: true
+              privileged: true
+            - name: maven
+              image: dockerhub.azk8s.cn/library/maven:3.8.1-openjdk-8-slim
+              command: "/bin/sh -c"
+              args: "cat"
+              ttyEnabled: true
+              privileged: true
+            - name: trivy
+              image: aquasec/trivy:0.18.3
+              command: "/bin/sh -c"
+              args: "cat"
+              ttyEnabled: true
+              privileged: true

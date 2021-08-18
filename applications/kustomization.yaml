@@ -13,8 +13,8 @@ resources:
   - admin/ingress-nginx.yaml
   - admin/ingress.yaml
   - admin/trivy.yaml
+  - admin/pvc.yaml
   - admin/jenkins.yaml
-  # - admin/admin-pvc.yaml
   # - admin/elastic-operator.yaml
   # - admin/sonarqube.yaml
   # - admin/nexus.yaml
