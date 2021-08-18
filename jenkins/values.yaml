@@ -32,3 +32,54 @@ jenkins:
           - id: "admin"
             name: "Jenkins Admin"
             password: "${jenkins-admin-secret-jenkins-pass}"
+        # ldap:
+        #   configurations:
+        #     - groupSearchFilter:
+        #         "(&(cn={0})(objectclass=group))"
+        #       inhibitInferRootDN: false
+        #       mailAddressAttributeName: "userPrincipalName"
+        #       managerDN: "CN=svc_Azure_Jenkins,OU=Service Accounts,OU=ACE,OU=AzureChina,DC=GITOPS,DC=LOCAL"
+        #       managerPasswordSecret: "${ldap-bind-credentials-password}"
+        #       rootDN: "DC=GITOPS,DC=LOCAL"
+        #       server: "ldap://10.224.0.2"
+        #       userSearch: "sAMAccountName={0}"
+        #   disableMailAddressResolver: false
+        #   disableRolePrefixing: true
+        #   groupIdStrategy: "caseInsensitive"
+        #   userIdStrategy: "caseInsensitive"
+      configScripts:
+        welcome-message: |
+          jenkins:
+            systemMessage: Welcome to Jenkins server.
+        maven: |
+          tool:
+            maven:
+              installations:
+                - name: "maven"
+                  properties:
+                    - installSource:
+                        installers:
+                          - maven:
+                              id: "3.6.3"
+        mailer: |
+          unclassified:
+            mailer:
+              charset: "UTF-8"
+              defaultSuffix: "@gitops.cn"
+              smtpHost: "smtp.gitops.local"
+              useSsl: false
+              useTls: false
+        global-library: |
+          unclassified:
+            globalLibraries:
+              libraries:
+                - defaultVersion: "master"
+                  name: "jenkins-library"
+                  retriever:
+                    modernSCM:
+                      scm:
+                        git:
+                          id: "jenkins-gitlab"
+                          remote: "https://github.com/goldginkgo/jenkins-library.git"
+                          traits:
+                            - "gitBranchDiscovery"
