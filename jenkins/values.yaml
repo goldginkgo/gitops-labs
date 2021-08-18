@@ -263,10 +263,10 @@ jenkins:
                 key: "DOCKER_CONFIG"
                 value: "/kaniko/.docker"
           volumes:
-            # - secretVolume:
-            #     mountPath: "/kaniko/.docker"
-            #     optional: false
-            #     secretName: "kaniko-docker"
+            - secretVolume:
+                mountPath: "/kaniko/.docker"
+                optional: false
+                secretName: "kaniko-dockerhub-secret"
             - persistentVolumeClaim:
                 mountPath: "/root/.m2/repository"
                 readOnly: false
