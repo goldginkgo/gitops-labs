@@ -18,7 +18,7 @@ sonarqube:
   persistence:
     enabled: true
     # storageClass: "azurefile"
-    size: 40Gi
+    size: 5Gi
   # postgresql:
   #   size: 20Gi
   #   storageClass: "azurefile"
