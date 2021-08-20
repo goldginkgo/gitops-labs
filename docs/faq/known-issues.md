@@ -14,3 +14,4 @@ I had a finalizer in the app, going in and editing that to - finalizer: [] allow
 - cert-manager is installed in cert-manager namespace rather than gitops-system namespace because of technical issues.
 - ArgoCD CLI may have issues as there is no ingress resource for gRPC.
 - After configuring `Pod Templates` in Jenkins, the `Command to run` section will be changed to `sleep`, remove the value and keep it empty for jnlp agents.
+- sealed-secrets will not update existings secrets

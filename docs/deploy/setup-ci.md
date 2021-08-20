@@ -9,7 +9,7 @@
 # kubectl exec -it deploy/nexus-nexus-repository-manager -- cat /nexus-data/admin.password
 ```
 
-- Update credentials for Nexus in Azure Key Vault
+- Update credentials for Nexus in sealed secrets
 
 ## SonarQube Configuration
 
@@ -36,6 +36,6 @@ Secret:
 When Jenkins is setup, a job called `load_all_jobs` is created. This job will populate all jobs defined in `gitops-gitops/jenkins-jobs`. Just build this job so that all other jobs will be generated.
 It's maybe necessary to approve the scripts in Manage Jenkins -> Script Approval.
 
-## GitLab Repository Webhook
+## Repository Webhook
 
 Configure webhooks for push events in the repositories so that code changes can trigger Jenkins jobs automatically.

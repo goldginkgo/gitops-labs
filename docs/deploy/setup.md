@@ -1,12 +1,5 @@
 # Setup GitOps Core Components
 
-## Provision a Kubernetes cluster
-
-The cluster should be able to create following resources.
-
-- LoadBalancer service (used by ingress controller)
-- PV (used by trivy)
-
 ## Install sealed-secrets
 
 Install sealed-secrets in the Kubernetes cluster.

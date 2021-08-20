@@ -2,34 +2,18 @@
 
 ## Add a new K8S environment
 
-- Install akv2k8s on the cluster
-
-```console
-$ kubectl create ns gitops-system
-$ helm repo add spv-charts https://charts.spvapi.no
-$ helm repo update
-$ helm upgrade --install akv2k8s spv-charts/akv2k8s \
---namespace gitops-system \
---set global.keyVaultAuth=environment \
---set global.env.AZURE_TENANT_ID=<REPLACE_ME> \
---set global.env.AZURE_CLIENT_ID=<REPLACE_ME> \
---set global.env.AZURE_CLIENT_SECRET=<REPLACE_ME> \
---set global.env.AZURE_ENVIRONMENT=AzureChinaCloud \
---set env_injector.enabled=false --version 2.0.11
-```
-
-- Create API Key with permission to the K8S cluster in Rancher.
-- Create credentail `<env>-cluster-credentials` in Azure Key Vault.
+- Install sealed-secrets on the cluster.
+- Get kubernetes credentials.
+- Create credentail `<env>-cluster-credentials` in sealed-secrets.
 - Add file `gitops-labs/argocd/base/project-<env>.yaml`.
 - Add file `gitops-labs/argocd/base/cluster-<env>-secret-sync.yaml`.
 - Add the files in `gitops-labs/argocd/kustomization.yaml`.
 - Add file `gitops-labs/secrets/<env>/<namespace>-regsecret-sync.yaml` for docker registry credentials.
-  You need to delete existing secret because akv2k8s can not update existing secrets.
+  You need to delete existing secret because sealed-secrets can not update existing secrets.
 - Add file `gitops-labs/applications/<env>/<env>-secrets.yaml`, `gitops-labs/applications/<env>/<env>-mlp-apps.yaml`.
 - Add the above file in `gitops-labs/applications/kustomization.yaml`.
 - Add dynatrace support in the cluster. Currently it's done manually.
 - Add Velero manually.
-- Add helm charts in `gitops-gitops/mlp-helmcharts/stress/`.
 
 ## Manage a new application
 
@@ -57,7 +41,7 @@ spec:
   project: <project-name>
 
   source:
-    repoURL: http://560GHD11/gitops-gitops/<repository>
+    repoURL: https://github.com/goldginkgo/gitops-labs/<repository>
     targetRevision: HEAD
     path: <manifest-path>
 
@@ -94,7 +78,7 @@ spec:
 
 ## Rollback applications to previous state
 
-It is as simple as do a Git revert in GitLab.
+It is as simple as do a Git revert in GitHub.
 
 ## How to troubleshoot issues
 

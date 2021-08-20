@@ -25,13 +25,7 @@ pipelineJob('gitops/docker-jenkins') {
   }
 
   triggers {
-    gitlabPush {
-        buildOnMergeRequestEvents(false)
-        buildOnPushEvents(true)
-        enableCiSkip(false)
-        setBuildDescription(false)
-        rebuildOpenMergeRequest('never')
-    }
+    githubPush()
   }
 }
 ```
@@ -40,7 +34,7 @@ pipelineJob('gitops/docker-jenkins') {
 
 ### Agents
 
-Currently we recommend to use the `maven38` agent. It has severl containers: kaniko, maven.
+Currently we recommend to use the `maven38` agent. It has severl containers: kaniko, maven, trivy.
 
 ### Build Images
 
@@ -112,14 +106,14 @@ pipeline {
     }
 
     environment {
-        GIT_URL = "560GHD11/gitops-gitops/jenkins-demo.git"
+        GIT_URL = "goldgingo/jenkins-demo.git"
         GIT_BRANCH = "master"
         BUILD_SHELL = "mvn clean package -Dmaven.tet.skip=true"
-        IMAGE = "acepi001cr01.azurecr.cn/library/jenkins-demo"
+        IMAGE = "goldginkgo/jenkins-demo"
         IMAGE_TAG = "0.1"
-        TO_EMAIL_USER = "frank.dai@gitops.cn"
+        TO_EMAIL_USER = "frank.dai@test.cn"
 
-        GITLAB_CREDS = credentials('gitlab_username_pass')
+        GITHUB_CREDS = credentials('github_username_pass')
         ACR_REGISTRY_CREDS = credentials('acepi001cr01_username_pass')
     }
 
@@ -130,7 +124,7 @@ pipeline {
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [],
                     submoduleCfg: [],
-                    userRemoteConfigs: [[credentialsId: 'gitlab_username_pass', url: "http://${GIT_URL}"]]])
+                    userRemoteConfigs: [[credentialsId: 'github_username_pass', url: "http://${GIT_URL}"]]])
             }
         }
 
@@ -217,7 +211,7 @@ pipeline {
                     if ("${isDeploy}" == 'yes' && "${GIT_BRANCH}" == 'master') {
                         tools.PrintMes("开始部署", "blue")
                         sh """
-                            git remote set-url origin http://${GITLAB_CREDS_USR}:${GITLAB_CREDS_PSW}@${GIT_URL}
+                            git remote set-url origin http://${GITHUB_CREDS_USR}:${GITHUB_CREDS_PSW}@${GIT_URL}
                             git checkout ${GIT_BRANCH}
                             git config --global user.email "jenkins2@gitops.cn"
                             git config --global user.name "Jenkins Bot"

@@ -3,10 +3,9 @@
 ## ArgoCD
 
 - Blue Green/Canary deployment
-- Update Image back to Gitlab according to https://blog.argoproj.io/closing-ci-cd-loop-using-argoproj-a78a50a98fe8
+- Update Image back to GitHub according to https://blog.argoproj.io/closing-ci-cd-loop-using-argoproj-a78a50a98fe8
 - HA deployment of Argo CD, Configuration tuning for large environments
 - Monitoring/Logging Optimization
-- Restrict IP to access Azure Key Vault
 
 ## Jenkins
 
@@ -16,13 +15,3 @@
 - Multi-branch pipeline
 - Backup
 - Cache base images for kaniko
-
-## SonarQube
-
-- LDAP support
-
-## Nexus
-
-- LDAP support
-- Detailed configrations
-- Nexux as Helm Chart Proxy

@@ -6,7 +6,7 @@ Currently we use v2.0.4 of ArgoCD. If you want to upgrade ArgoCD, please replace
 
 ## Upgrade Jenkins
 
-- Update the Dokcerfile in `gitops-jenkins` repository. The Jenkins job `gitops/alid-jenkins` will be executed automatically. Image tag will bump up a minor version, as well as the new git tag in the repository.
-- Update the image tag in `gitops-gitops/gitops-labs/jenkins/values.yaml`.
-- [Optional] Update the Helm chart version in `gitops-gitops/gitops-labs/jenkins/Chart.yaml`.
+- Update the Dokcerfile in `jenkins-docker` repository. The Jenkins job `gitops/jenkins-docker` will be executed automatically. Image tag will bump up a minor version, as well as the new git tag in the repository.
+- Update the image tag in `gitops-labs/jenkins/values.yaml`.
+- [Optional] Update the Helm chart version in `gitops-labs/jenkins/Chart.yaml`.
 - Restart the jenkins statefulset in ArgoCD UI.

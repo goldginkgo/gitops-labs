@@ -1,7 +1,7 @@
 # K8S Clusters and Services
 
-We have two kinds of Kubernetes clusters: the admin cluster and workload cluster.
-The admin cluster is where ArgoCD and other DevOps tools resides, and the workload cluster is the culster that business applications are deployed.
+We have two kinds of Kubernetes clusters: the admin cluster and workload clusters.
+The admin cluster is where ArgoCD and other DevOps tools resides, and the workload cluster is the culster where business applications are deployed.
 
 ## Admin Cluster
 
@@ -10,7 +10,7 @@ The admin cluster is where ArgoCD and other DevOps tools resides, and the worklo
 - Argo CD Notifications
 - Argo CD Image Updater
 - Nginx Ingress Controller
-- Azure Key Vault to Kubernetes
+- sealed-secrets
 - cert-manager
 - Jenkins
 - Sonarqube
@@ -19,13 +19,13 @@ The admin cluster is where ArgoCD and other DevOps tools resides, and the worklo
 - Prometheus/Grafana
 - ...
 
-## Workload Clusters (DEV, TEST, QAS, PROD)
+## Workload Clusters (DEV, TEST, QA, PROD)
 
-- Azure Key Vault to Kubernetes
+- sealed-secrets
 - Secrects for docker registry, certificates
 - Nginx Ingress Controller
 - Filebit
-- MLP applications
+- Business applications
 - Argo Rollouts
 - Dynatrace Agent
 - Velero

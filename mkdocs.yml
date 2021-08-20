@@ -32,7 +32,6 @@ nav:
       - "deploy/backup-restore.md"
   - User guide:
       - "user-guide/basic-usage.md"
-      - "user-guide/migration.md"
       - "user-guide/deployment-strategy.md"
       - "user-guide/libraries.md"
       - "user-guide/continuous-integration.md"

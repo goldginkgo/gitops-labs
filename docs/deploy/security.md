@@ -1,22 +1,9 @@
 # Security
 
-## Unified Secret Management with Azure Key Vault
+## Unified Secret Management with sealed-secrets
 
-We use Azure Key Vault to store all the credentials and they will be synchronized to Kubernetes automatically.
+We use sealed-secrets to store all the credentials and they will be synchronized to Kubernetes automatically.
 ArgoCD and Jenkins will pick up these secrets and use them internally.
-
-## Role Based Access Control with LDAP
-
-Currently ArgoCD and Jenkins are integrated with LDAP. Here are a list of LDAP groups and their permissions.
-
-| LDAP Group         |                      Permissions                       |
-| :----------------- | :----------------------------------------------------: |
-| g_ArgoCD_Admin     |     All permissions to ArgoCD. Currently not used.     |
-| g_ArgoCD_Operator  | All permission to ArgoCD applications except deletion. |
-| g_ArgoCD_Reader    |                  Read-only to ArgoCD                   |
-| g_Jenkins_Admin    |              All permissions to Jenkins.               |
-| g_Jenkins_Operator |     Overall Read-only to Jenkins, can build jobs.      |
-| g_Jenkins_Reader   |                 Read-only to Jenkins.                  |
 
 ## Automated Certificate Creation and Renewal
 
