@@ -18,7 +18,7 @@ resources:
   - admin/pvc.yaml
   - admin/jenkins.yaml
   - admin/elastic-operator.yaml
-  # - admin/elastic-stack.yaml
+  - admin/elastic-stack.yaml
   # - admin/kube-prometheus-stack.yaml
   # - admin/velero.yaml
 

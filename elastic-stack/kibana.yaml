@@ -1,0 +1,23 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+spec:
+  version: 7.13.3
+  count: 1
+  elasticsearchRef:
+    name: elastic-search
+  podTemplate:
+    spec:
+      containers:
+      - name: kibana
+        env:
+          - name: NODE_OPTIONS
+            value: "--max-old-space-size=2048"
+        # resources:
+        #   requests:
+        #     memory: 1Gi
+        #     cpu: 1
+        #   limits:
+        #     memory: 2.5Gi
+        #     cpu: 2
