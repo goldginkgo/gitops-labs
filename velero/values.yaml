@@ -1,0 +1,75 @@
+velero:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 4000m
+      memory: 4096Mi
+
+  initContainers:
+    - name: velero-plugin-for-azure
+      image: velero/velero-plugin-for-microsoft-azure:v1.2.1
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+
+  configuration:
+    provider: azure
+    backupStorageLocation:
+      name: default
+      provider: azure
+      bucket: acepi001kc04
+      config:
+        resourceGroup: ahkpi001
+        storageAccount: ahkpi001sa01
+    defaultVolumesToRestic: true
+
+  credentials:
+    useSecret: true
+    existingSecret: cloud-credentials
+
+  snapshotsEnabled: false
+
+  deployRestic: true
+
+  restic:
+    # podVolumePath: /var/lib/kubelet/pods # Change me for PKS
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: 4000m
+        memory: 4096Mi
+
+  schedules:
+    daily-1:
+      schedule: "30 7 * * *"   # At 07:30 UTC every day
+      template:
+        ttl: "336h"
+        includedNamespaces:
+          - default
+          - gitops-system
+    permonth-01:
+      schedule: "30 9 1 * *"   # At 09:30 UTC  on day-of-month 1
+      template:
+        ttl: "8760h"
+        includedNamespaces:
+          - default
+          - gitops-system
+    peryear-0101:
+      schedule: "30 10 1 1 *"  # At 10:30 UTC  on day-of-month 1 in January.
+      template:
+        ttl: "26280h"
+        includedNamespaces:
+          - default
+          - gitops-system
+    weekly-6:
+      schedule: "30 8 * * 6"  # At 08:30 UTC  on Saturday.
+      template:
+        ttl: "1344h"
+        includedNamespaces:
+          - default
+          - gitops-system
