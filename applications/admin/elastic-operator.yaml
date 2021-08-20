@@ -19,7 +19,7 @@ spec:
   project: admin
 
   source:
-    repoURL: https://github.com/goldginkgo
+    repoURL: https://github.com/goldginkgo/gitops-labs
     targetRevision: HEAD
     path: elastic-operator
 
