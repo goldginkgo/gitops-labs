@@ -1,0 +1,27 @@
+kube-prometheus-stack:
+  global:
+    alertmanagerSpec:
+      image:
+        repository: quay.azk8s.cn/prometheus/alertmanager
+
+  kube-state-metrics:
+    image:
+      repository: k8sgcr.azk8s.cn/kube-state-metrics/kube-state-metrics
+
+  prometheusOperator:
+    serviceMonitor:
+      image:
+        repository: quay.azk8s.cn/prometheus-operator/prometheus-operator
+      prometheusConfigReloaderImage:
+        repository: quay.azk8s.cn/prometheus-operator/prometheus-config-reloader
+      thanosImage:
+        repository: quay.azk8s.cn/thanos/thanos
+    admissionWebhooks:
+      patch:
+        image:
+          repository: dockerhub.azk8s.cn/jettech/kube-webhook-certgen
+
+  prometheus:
+    prometheusSpec:
+      image:
+        repository: quay.azk8s.cn/prometheus/prometheus
